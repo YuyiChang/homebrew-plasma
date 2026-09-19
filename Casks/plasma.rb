@@ -1,14 +1,20 @@
 cask "plasma" do
-  version "2.2.0"
-  sha256 "REPLACE_WITH_SHA256" # from PLASMA_MacOS_arm64.app.zip.sha256 on the v#{version} release
+  version "2.2.1"
+  sha256 "ec0fdabd88b3dc4212e81ac60a5d469579e5f4e322217894f0ae41b8da1bfa93"
 
   url "https://github.com/YuyiChang/PLASMA/releases/download/v#{version}/PLASMA_MacOS_arm64.app.zip"
   name "PLASMA"
   desc "Platform for LSL-based Acquisition of Sensor Metrics and Analytics"
   homepage "https://github.com/YuyiChang/PLASMA"
 
+  livecheck do
+    url :url
+    strategy :github_latest
+  end
+
   # only the Apple-silicon binary is built (see .github/workflows/build.yml)
   depends_on arch: :arm64
+  depends_on :macos
 
   app "PLASMA.app"
   # Also expose the console binary directly as `plasma`, for anyone who'd
@@ -18,14 +24,13 @@ cask "plasma" do
   # visible instead of failing silently in the background).
   binary "#{appdir}/PLASMA.app/Contents/Resources/plasma-bin", target: "plasma"
 
-  postflight do
-    system_command "/usr/bin/xattr",
-                    args: ["-dr", "com.apple.quarantine", "#{appdir}/PLASMA.app"]
-  end
-
-  livecheck do
-    url :url
-    strategy :github_latest
+  postflight_steps do
+    # {{appdir}} is expanded at run time by the install-steps runner — the
+    # DSL block here has no `appdir` method of its own (see Homebrew's
+    # install_steps.rb CONTENT_PATH_TOKENS). must_succeed: false because a
+    # local/test install may not carry the quarantine attribute at all.
+    run "/usr/bin/xattr", args:         ["-dr", "com.apple.quarantine", "{{appdir}}/PLASMA.app"],
+                          must_succeed: false
   end
 
   caveats <<~EOS
