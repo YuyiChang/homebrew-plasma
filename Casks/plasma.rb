@@ -1,6 +1,6 @@
 cask "plasma" do
-  version "2.2.1"
-  sha256 "ec0fdabd88b3dc4212e81ac60a5d469579e5f4e322217894f0ae41b8da1bfa93"
+  version "2.2.3"
+  sha256 "f750a20e55dc58c8fa76d40c39e7eaeb8d08c5da5dfb4ff68eda2afd0f8ba41f"
 
   url "https://github.com/YuyiChang/PLASMA/releases/download/v#{version}/PLASMA_MacOS_arm64.app.zip"
   name "PLASMA"
@@ -22,7 +22,7 @@ cask "plasma" do
   # .github/build_macos_app.sh — the .app has no window of its own; it opens
   # this same binary in a visible Terminal window so startup failures stay
   # visible instead of failing silently in the background).
-  binary "#{appdir}/PLASMA.app/Contents/Resources/plasma-bin", target: "plasma"
+  binary "#{appdir}/PLASMA.app/Contents/Resources/PLASMA_MacOS_arm64/PLASMA_MacOS_arm64", target: "plasma"
 
   postflight_steps do
     # {{appdir}} is expanded at run time by the install-steps runner — the
