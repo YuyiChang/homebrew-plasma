@@ -1,6 +1,6 @@
 cask "plasma" do
-  version "2.2.3"
-  sha256 "f750a20e55dc58c8fa76d40c39e7eaeb8d08c5da5dfb4ff68eda2afd0f8ba41f"
+  version "2.3.1"
+  sha256 "6243be65ad53caaaf4588eee540e80b86ac72be98ab5fbcafa016605d70f3db7"
 
   url "https://github.com/YuyiChang/PLASMA/releases/download/v#{version}/PLASMA_MacOS_arm64.app.zip"
   name "PLASMA"
